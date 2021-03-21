@@ -11,14 +11,17 @@ const connectionString = 'mongodb+srv://testUser:SaurophaganaxCrownVodkaWalrus@w
 
 //Connects to workoutTracker collection in workoutTrackerCluster via mongoose, first argument is connectionString, second argument are settings that prevent deprecation warnings
 mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
+//Upon successfully connecting to database, initiates express to listen on PORT
+.then((result) => app.listen(PORT, () => {
+    console.log(`Connection made to database. Server started on port ${PORT}`)
+   })
+)
+
+//If connection to DB returns an error, logs error to console
+.catch((er) => console.log(err))
 
 //Sets port to a value
 const PORT = process.env.PORT || 7103
-
-//Listens, reports to console that a server has successfully started on PORT
-app.listen(PORT, function(){
-    console.log(`server started on port ${PORT}`)
-   })
 
 //Sets up static folder
 app.use(express.static(path.join(__dirname, 'public'),{extensions:['html']}))
