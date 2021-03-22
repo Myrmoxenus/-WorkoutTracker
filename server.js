@@ -6,9 +6,12 @@ const mongoose = require('mongoose')
 //Test
 const Workout = require('./models/workout.js')
 
-
 // Initializes the variable "app" with express()
 const app = express()
+
+//
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 //Sets port to a value
 const PORT = process.env.PORT || 7103
@@ -18,6 +21,7 @@ const connectionString = 'mongodb+srv://testUser:SaurophaganaxCrownVodkaWalrus@w
 
 //Connects to workoutTracker collection in workoutTrackerCluster via mongoose, first argument is connectionString, second argument are settings that prevent deprecation warnings
 mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
+
 //Upon successfully connecting to database, initiates express to listen on PORT
 .then((result) => app.listen(PORT, () => {
     console.log(`Connection made to database. Server started on port ${PORT}`)
@@ -29,7 +33,6 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
 
 //Sets up static folder
 app.use(express.static(path.join(__dirname, 'public'),{extensions:['html']}))
-
 
 //Test routes
 app.get('/testAddWorkout', (req, res) => {
@@ -61,10 +64,11 @@ app.get('/testReturnWorkouts', (req, res) => {
     })
 })
 
-app.get('/testReturnSingleWorkout', (req, res) => {
+
+app.get('/test', (req, res) => {
     Workout.findById('6056bde1714b63475cbb7e91')
     .then((result) => {
-        res.send(result)
+        console.log('It worked!')
     })
     .catch((err) =>{
         console.log(err)
