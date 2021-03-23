@@ -16,15 +16,17 @@ app.use(express.json())
 //Sets port to a value
 const PORT = process.env.PORT || 7103
 
-/*//String for connecting to MongoDB Atlas
-//const connectionString = 'mongodb+srv://testUser:SaurophaganaxCrownVodkaWalrus@workouttrackercluster.rolgz.mongodb.net/workoutTracker?retryWrites=true&w=majority'
+//mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useNewUrlParser: true, useUnifiedTopology: true})
+
+//String for connecting to MongoDB Atlas
+const connectionString = 'mongodb+srv://testUser:SaurophaganaxCrownVodkaWalrus@workouttrackercluster.rolgz.mongodb.net/workoutTracker?retryWrites=true&w=majority'
 
 //Connects to workoutTracker collection in workoutTrackerCluster via mongoose, first argument is connectionString, second argument are settings that prevent deprecation warnings
-//mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
-*/
+mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useNewUrlParser: true, useUnifiedTopology: true})
-/*
+
+
+
 //Upon successfully connecting to database, initiates express to listen on PORT
 .then((result) => app.listen(PORT, () => {
     console.log(`Connection made to database. Server started on port ${PORT}`)
@@ -33,7 +35,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useN
 
 //If connection to DB returns an error, logs error to console
 .catch((err) => console.log(err))
-*/
+
 //Sets up static folder
 app.use(express.static(path.join(__dirname, 'public'),{extensions:['html']}))
 
