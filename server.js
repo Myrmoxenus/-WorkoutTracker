@@ -16,8 +16,16 @@ app.use(express.json())
 //Sets port to a value
 const PORT = process.env.PORT || 7103
 
-//Connects to mongoose(I hope)
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useNewUrlParser: true, useUnifiedTopology: true})
+//Connects to Mongo Atlas DB
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/workout',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
+)
 
 /*
 //String for connecting to MongoDB Atlas
