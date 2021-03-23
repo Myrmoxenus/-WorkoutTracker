@@ -3,7 +3,7 @@ const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
 
-//Test
+//Import models
 const Workout = require('./models/workout.js')
 
 // Initializes the variable "app" with express()
