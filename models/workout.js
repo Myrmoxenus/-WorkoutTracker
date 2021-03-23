@@ -34,9 +34,9 @@ const workoutSchema = new Schema({
             required: true
         }
     }],
-},{
-    toJSON: {
-        virtuals: true
+    totalDuration:{
+        type: Number,
+        default: 0
     }
 }
 )
