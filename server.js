@@ -37,12 +37,14 @@ app.use(express.static(path.join(__dirname, 'public'),{extensions:['html']}))
 //Test routes
 app.get('/testAddWorkout', (req, res) => {
     const workoutInstance = new Workout({
-        type: 'Resistance',
-        name: 'test workout',
-        weight: 1,
-        sets: 2,
-        reps: 3,
-        duration: 4,
+        exercises: {
+            type: 'Resistance',
+            name: 'test workout',
+            weight: 1,
+            sets: 2,
+            reps: 3,
+            duration: 4,
+        }
     })
 
     workoutInstance.save()
@@ -54,21 +56,35 @@ app.get('/testAddWorkout', (req, res) => {
     })
 })
 
-app.get('/testReturnWorkouts', (req, res) => {
+app.get('/api/workouts', (req, res) => {
     Workout.find()
     .then((result) => {
-        res.send(result)
+        res.json(result)
     })
     .catch((err) =>{
         console.log(err)
     })
 })
 
-
-app.get('/test', (req, res) => {
-    Workout.findById('6056bde1714b63475cbb7e91')
+app.post('/api/workouts', (req, res) => {
+    Workout.create({})
     .then((result) => {
+        res.json(result)
         console.log('It worked!')
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+})
+//TEST
+app.put('/api/workouts/:id', (req, res) => {
+    const workoutInstance = new Workout({
+        exercises: req.body
+    })
+
+    workoutInstance.save()
+    .then((result) => {
+        res.send(result)
     })
     .catch((err) =>{
         console.log(err)
