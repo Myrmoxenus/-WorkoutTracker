@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 7103
 
 //Connects to workoutTracker collection in workoutTrackerCluster via mongoose, first argument is connectionString, second argument are settings that prevent deprecation warnings
 //mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useNewUrlParser: true/*, useUnifiedTopology: true*/})
 
 //Upon successfully connecting to database, initiates express to listen on PORT
 .then((result) => app.listen(PORT, () => {
