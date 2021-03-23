@@ -9,14 +9,14 @@ const Workout = require('./models/workout.js')
 // Initializes the variable "app" with express()
 const app = express()
 
-//
+//Configures express
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 //Sets port to a value
 const PORT = process.env.PORT || 7103
 
-//Connect to MongoDB
+//String for connecting to MongoDB Atlas
 const connectionString = 'mongodb+srv://testUser:SaurophaganaxCrownVodkaWalrus@workouttrackercluster.rolgz.mongodb.net/workoutTracker?retryWrites=true&w=majority'
 
 //Connects to workoutTracker collection in workoutTrackerCluster via mongoose, first argument is connectionString, second argument are settings that prevent deprecation warnings
@@ -34,27 +34,7 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
 //Sets up static folder
 app.use(express.static(path.join(__dirname, 'public'),{extensions:['html']}))
 
-//Test routes
-app.get('/testAddWorkout', (req, res) => {
-    const workoutInstance = new Workout({
-        exercises: {
-            type: 'Resistance',
-            name: 'test workout',
-            weight: 1,
-            sets: 2,
-            reps: 3,
-            duration: 4,
-        }
-    })
-
-    workoutInstance.save()
-    .then((result) => {
-        res.send(result)
-    })
-    .catch((err) =>{
-        console.log(err)
-    })
-})
+//API ROUTES
 
 app.get('/api/workouts', (req, res) => {
     Workout.find()
@@ -76,7 +56,7 @@ app.post('/api/workouts', (req, res) => {
         console.log(err)
     })
 })
-//TEST
+
 app.put('/api/workouts/:id', (req, res) => {
     const workoutInstance = new Workout({
         exercises: req.body
@@ -85,6 +65,26 @@ app.put('/api/workouts/:id', (req, res) => {
     workoutInstance.save()
     .then((result) => {
         res.send(result)
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+})
+
+app.get('/api/workouts/range', (req, res) => {
+    Workout.find()
+    .then((result) => {
+        res.json(result)
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+})
+
+app.post('/api/workouts/range', (req, res) => {
+    Workout.create({})
+    .then((result) => {
+        res.json(result)
     })
     .catch((err) =>{
         console.log(err)
